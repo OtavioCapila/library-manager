@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="main-panel">
+    <h1>Olá {{userData?.name}}</h1>
+    <div class="row">
+      <div class="col-lg-5">
+        <h3>Livros Cadastrados - {{booksData?.length}}</h3>
+        <div class="bookshelf">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let book of booksData"
+              [ngClass]="!book.bookTakenBy ? 'notTaken' : 'taken'">
+              <div class="row">
+                <div class="col-lg-6">
+                  <span>Escritor(a): {{book.bookCreator}}</span><br>
+                  <span>Nome do Livro: {{book.bookName}}</span><br>
+                  <span class="bookNotTaken" *ngIf="!book.bookTakenBy">Situação: Disponível<br></span>
+                  <span class="bookTaken" *ngIf="book.bookTakenBy">Situação: Emprestado para
+                    {{book.bookTakenBy?.name}}<br></span>
+                </div>
+                <div class="col-lg-6">
+                  <div class="icons">
+                    <button class="btn btn-outline-dark" ngbTooltip="Pegar Livro Emprestado"
+                      (click)="onClickGetBook(book._id)">
+                      <i class="fas fa-book-reader"></i>
+                    </button>
+                    <button *ngIf="book.bookTakenBy?.name === userData?.name" class="btn btn-outline-dark"
+                      ngbTooltip="Devolver Livro" (click)="onClickReturnBook(book._id)">
+                      <i class="fas fa-undo-alt"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button id="btnRegisterNewBook" class="btn btn-outline-success" (click)="onClickRegisterNewBook()">Cadastrar
+          Livro</button>
+        <div *ngIf="registerBook" class="newBookForm">
+          <form [formGroup]="newBook">
+            <label>Escritor(a) do Livro</label>
+            <input type="text" class="form-control" placeholder="Nome do Escritor(a)" formControlName="bookCreator">
+            <label>Nome do Livro</label>
+            <input type="text" class="form-control" placeholder="Nome do Livro" formControlName="bookName">
+          </form>
+          <button id="saveNewBook" class="btn btn-outline-primary" (click)="onClickSaveNewBook()">Salvar</button>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <h3>Usuários Cadastrados - {{allUsersData?.length}}</h3>
+        <div class="usershelf">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let users of allUsersData">
+              <div class="row">
+                <div class="col-lg-6">
+                  <span>Usuário: {{users.name}}</span><br>
+                  <span>Email: {{users.email}}</span><br>
+                  <p *ngIf="users.booksUserTaken.length !== 0" class="booksUserHasTaken">Livros com o usuário</p>
+                  <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let book of users.booksUserTaken">
+                      <span>Escritor(a): {{book.bookCreator}}</span><br>
+                      <span>Nome do Livro: {{book.bookName}}</span><br>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <div class="icons">
+                    <button class="btn btn-outline-dark" ngbTooltip="Emprestar Livro"
+                      (click)="onClickForceSetBoot({name:users.name,id:users._id})">
+                      <i class="fas fa-check-square"></i>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

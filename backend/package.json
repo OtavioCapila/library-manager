@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "System that manager a library",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/server.js"
+  },
+  "author": "OtavioCapila",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.4.22",
+    "nodemon": "^1.18.10"
+  },
+  "devDependencies": {
+    "enhanced-resolve": "^3.3.0"
+  },
+  "engines":{
+    "node": "10.15.2",
+    "npm": "6.4.1"
+  }
+}
